@@ -1,6 +1,7 @@
 # FinMood/Stock-Market-Sentiment-Analysis-System
 python's project
-# {FinMood/Stock-Market-Sentiment-Analysis-System 股票市場情緒分析系}
+# FinMood/Stock-Market-Sentiment-Analysis-System 
+# 股票市場情緒分析系統
 
 > 一句話描述：為 {誰} 解決 {什麼} 問題。
 
@@ -13,6 +14,7 @@ python's project
 ---
 
 ## 系統架構
+![alt text](image.png)
 
 ```
 Source → Ingest → Storage → Process → Serve → Observe
@@ -34,8 +36,8 @@ Source → Ingest → Storage → Process → Serve → Observe
 ## 快速開始
 
 ```bash
-git clone https://github.com/{你們的team}/{project}.git
-cd {project}
+git clone https://github.com/FinMood/Stock-Market-Sentiment-Analysis-System.git
+cd Stock-Market-Sentiment-Analysis-System
 cp .env.example .env   # 填入需要的 API keys
 pip install -r requirements.txt
 python main.py
@@ -44,6 +46,9 @@ python main.py
 ---
 
 ## 團隊
+分工
+Table 1 —> Table 3 : 2~3位(包含斷詞等處理)
+Table 3+ Table 2 —> Table 4  ： 2~3位  (包含建立API)
 
 | 成員 | 負責範圍 | GitHub |
 |---|---|---|
