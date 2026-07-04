@@ -47,8 +47,8 @@ python main.py
 
 ## 團隊
 分工
-Table 1 —> Table 3 : 2~3位(包含斷詞等處理)
-Table 3+ Table 2 —> Table 4  ： 2~3位  (包含建立API)
+Table 1 —> Table 3 : 2-3位(包含斷詞等處理)
+Table 3+ Table 2 —> Table 4  ： 2-3位  (包含建立API)
 
 | 成員 | 負責範圍 | GitHub |
 |---|---|---|
