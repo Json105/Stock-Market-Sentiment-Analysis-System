@@ -55,7 +55,7 @@ Table 3+ Table 2 —> Table 4  ： 2-3位  (包含建立API)
 
 | 成員 | 負責範圍 | GitHub |
 |---|---|---|
-| 王翠賢 | {負責什麼} | @[user1](https://github.com/Cuei-Sian/portfolio) |
+| 王翠賢 | {標題清洗/Jieba斷詞/字典計分} | [翠賢github](https://github.com/Cuei-Sian) |
 | 張凱宇 | {爬蟲} | https://github.com/HolaBaGa |
 | {Name} | {負責什麼} | @user3 |
 
