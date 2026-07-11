@@ -345,10 +345,7 @@ name = "stock-market-sentiment-analysis-system"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-<<<<<<< HEAD
-=======
     { name = "celery" },
->>>>>>> f5d546f1218835bedca57cc2b3936e8eb4250dbc
     { name = "jieba" },
     { name = "pandas" },
     { name = "requests" },
@@ -356,10 +353,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-<<<<<<< HEAD
-=======
     { name = "celery", specifier = ">=5.6.3" },
->>>>>>> f5d546f1218835bedca57cc2b3936e8eb4250dbc
     { name = "jieba", specifier = ">=0.42.1" },
     { name = "pandas", specifier = ">=3.0.3" },
     { name = "requests", specifier = ">=2.34.2" },
@@ -375,8 +369,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "tzlocal"
 version = "5.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -389,7 +381,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> f5d546f1218835bedca57cc2b3936e8eb4250dbc
 name = "urllib3"
 version = "2.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -397,8 +388,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/53/0c/06f8b233b8fd13b9e
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897", size = 131087, upload-time = "2026-05-07T16:13:17.151Z" },
 ]
-<<<<<<< HEAD
-=======
 
 [[package]]
 name = "vine"
@@ -417,4 +406,3 @@ sdist = { url = "https://files.pythonhosted.org/packages/34/74/c6428f875774288be
 wheels = [
     { url = "https://files.pythonhosted.org/packages/96/42/3e5985a0a7e57de470b320c6d6a1a67c844f6737a587f3d44dd13d1819e7/wcwidth-0.8.2-py3-none-any.whl", hash = "sha256:d63947694a0539a1d51e01eda7caf800c291020e6cdd7e28ad7b14dd33ad4f85", size = 323166, upload-time = "2026-06-29T18:11:09.888Z" },
 ]
->>>>>>> f5d546f1218835bedca57cc2b3936e8eb4250dbc
