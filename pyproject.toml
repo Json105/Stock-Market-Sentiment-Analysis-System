@@ -3,7 +3,7 @@ name = "stock-market-sentiment-analysis-system"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.12.13"
+requires-python = ">=3.12"
 dependencies = [
     "jieba>=0.42.1",
     "pandas>=3.0.3",
