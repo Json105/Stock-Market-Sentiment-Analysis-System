@@ -4,6 +4,7 @@ import jieba
 # 1. 載入新聞標題
 news_title_fname = "tsmc_news_2026_back.csv"
 
+
 news_title_df = pd.read_csv(news_title_fname)
 news_title_list = news_title_df["title"].tolist()
 
@@ -27,12 +28,15 @@ for title in news_title_list:
     news_dict = {}
 
     # tokenize with Jieba
-    tokens_list = jieba.cut(title, cut_all=False)
-#    tokens_list = jieba.cut_for_search(title)
+#    tokens_list = jieba.cut(title, cut_all=False)
+    tokens_list = jieba.lcut_for_search(title)
     tokens_list = list(tokens_list)
 
     # make NTUSD sentiment dict
-    sent_dict = {"pos":{}, "neg":{}, "pos_cnt":0, "neg_cnt":0}
+    sent_dict = {"pos": {}, "neg": {},
+                 "pos_cnt": 0, "neg_cnt": 0,
+                 "score": 0, "label": ""}
+
     for token in tokens_list:
         if token in pos_words_list:
             sent_dict["pos_cnt"] += 1
@@ -50,6 +54,17 @@ for title in news_title_list:
             else:
                 sent_dict["neg"][token] = 1
 
+    # compute score
+    sent_dict["score"] = sent_dict["pos_cnt"] - sent_dict["neg_cnt"]
+
+    # label based on socre
+    if sent_dict["score"] > 0:
+        sent_dict["label"] = "正面"
+    elif sent_dict["score"] == 0:
+        sent_dict["label"] = "中立"
+    else:
+        sent_dict["label"] = "負面"
+
     # record tokens and sentiment dict
     news_dict["tokens"] = tokens_list
     news_dict["sent_dict"] = sent_dict
@@ -63,14 +78,12 @@ for news_dict in news_dicts_list:
 
 
 # 5. 儲存結果為一份 JSON 檔
-save_news_fname = "tsmc_news_2026_tokens_n_sents_1.json"
+news_dict_fname = "tsmc_news_2026_tokens_n_sents_1.json"
 news_dict_df = pd.DataFrame(news_dicts_list)
-news_dict_df.to_json(save_news_fname, orient="records")
+news_dict_df.to_json(news_dict_fname, orient="records")
 
 
 # 6. 載入 JSON 檔，確認儲存和載入的資料一樣
-load_news_fname = "tsmc_news_2026_tokens_n_sents_1.json"
-news_dict_df2 = pd.read_json(load_news_fname)
+news_dict_df2 = pd.read_json(news_dict_fname)
 
 print(f"news_dict_df and news_dict_df2 are equal: {news_dict_df.equals(news_dict_df2)}")
-
