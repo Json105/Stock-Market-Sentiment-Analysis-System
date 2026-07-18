@@ -110,7 +110,7 @@ Table 3+ Table 2 —> Table 4  ： 2-3位  (包含建立API)
 | 張凱宇 | {爬蟲} | [凱宇github](https://github.com/HolaBaGa) |
 | 廖宏偉 | {資料整合} | [宏偉github](https://github.com/Json105) |
 | 賴至得 | {斷詞/字典計分} | [至得github](https://github.com/cloudyctl67) |
-| {Name} | {負責什麼} | @user3 |
+| 蘇建豪 | {資料整合} | [建豪github](https://github.com/sum78435-lang) |
 
 ---
 
