@@ -15,4 +15,5 @@ dependencies = [
     "requests>=2.34.2",
     "torch>=2.13.0",
     "yfinance>=1.5.1",
+    "mysql-connector-python>=9.7.0",
 ]

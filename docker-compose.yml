@@ -1,71 +1,74 @@
-# 1. 啟動 RabbitMQ + Flower（背景執行）
-# docker compose -f docker-compose-local.yml up -d rabbitmq flower
-# 2. 看 log 確認啟動成功
-# docker logs -f rabbitmq
-# docker logs -f flower
-# # 3. （今天結束再執行）收工時關閉
-# docker compose -f docker-compose.yml stop rabbitmq flower
+# 全服務整合 docker-compose
+# 包含：MySQL + phpMyAdmin +  Metabase
+# 使用方式：
+#   docker compose -f docker-compose-all.yml up
+
+# Port 分配：
+#   3306  - MySQL
+#   8080  - phpMyAdmin
+#   8081  - Airflow Web UI
+#   3000  - Metabase
 
 services: # 定義所有要啟動的服務 
  # ===== Message Broker =====
-  rabbitmq:
-    image: 'rabbitmq:3.13-management-alpine'
-    container_name: rabbitmq
+ 
+ 
+ # ===== Database =====
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
     ports:
-      - '5672:5672'
-      - '15672:15672'
+      - "3306:3306"
     environment:
-      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
-      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASS}"
-      RABBITMQ_DEFAULT_VHOST: "/"
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-1234}
+    volumes:
+      - mysql:/var/lib/mysql
+      # share volumes of docker container to outside volume, 
+      # let data persist
+      # 將 docker container 的 volumes 跟外部 volumes 做連結, 
+      # 讓資料不會因為 container close or update 而遺失
+    # 設定 mysql 使用原生認證的密碼 hash
+    command: --default-authentication-plugin=mysql_native_password
 
-  flower:
-    image: mher/flower:2.0
-    container_name: flower
-    command: ["celery", "--broker=amqp://worker:worker@rabbitmq", "flower", "--port=5555"]
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
     ports:
-      - 5555:5555
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-
-
-  # ===== Celery Workers =====
-  crawler_twse:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crawler_twse
-    command: uv run celery -A crawler.worker worker --loglevel=info --hostname=twse@%h -Q twse
+      - "8080:80"
     environment:
-      RABBITMQ_HOST: rabbitmq
-      # MYSQL_HOST: mysql
+      PMA_HOST: mysql
     depends_on:
-      rabbitmq:
-        condition: service_healthy
-      # mysql:
-      #   condition: service_healthy
-    volumes:
-      - ./output:/crawler/output
+      - mysql
 
-  crawler_tpex:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crawler_tpex
-    command: uv run celery -A crawler.worker worker --loglevel=info --hostname=tpex@%h -Q tpex
-    environment:
-      RABBITMQ_HOST: rabbitmq
-      # MYSQL_HOST: mysql
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-      # mysql:
-      #  condition: service_healthy
-    volumes:
-      - ./output:/crawler/output
+# 在最外層加上 volumes 宣告，確保資料持久化
+volumes:
+  mysql:
+
+  
+
+  # ===== BI Tool =====
+  # metabase:
+  #   image: metabase/metabase:latest
+  #   container_name: metabase
+  #   ports:
+  #     - 3000:3000
+  #   # 設定庫放 MySQL 的 metabasedb（由 init-metabase-appdb.sql 在 volume 初始化時建立）
+  #   environment:
+  #     MB_DB_TYPE: mysql
+  #     MB_DB_HOST: mysql
+  #     MB_DB_PORT: 3306
+  #     MB_DB_DBNAME: metabasedb
+  #     MB_DB_USER: metabase_app
+  #     MB_DB_PASS: "1234"
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: curl --fail -I http://localhost:3000/api/health || exit 1
+  #     interval: 15s
+  #     timeout: 5s
+  #     retries: 10
+  
